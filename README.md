@@ -2,6 +2,10 @@
 
 Run [tussh](https://github.com/baeroe/tussh) in a [herdr](https://herdr.dev) split pane or in its own tab. tussh is an SSH connection manager with access control for AI agents. herdr-tussh works the same way as [herdr-lazydocker](https://github.com/sudoeren/herdr-lazydocker) and [herdr-lazysql](https://github.com/baeroe/herdr-lazysql).
 
+![tussh in a herdr split to the right of a shell](docs/screenshots/split.png)
+
+*`open-tussh`: tussh in a split next to the shell you were working in.*
+
 | Action | Does |
 |---|---|
 | `open-tussh` | Toggles tussh in a split to the right: opens it, focuses it, or closes it when it is focused |
@@ -9,6 +13,10 @@ Run [tussh](https://github.com/baeroe/tussh) in a [herdr](https://herdr.dev) spl
 | `alerts` | Opens `tussh alerts --popup` as a popup. The popup closes by itself once every request it showed has been decided. |
 
 tussh itself knows nothing about herdr: when an agent needs approval and no tussh TUI is open, it only sends a macOS notification. Bind `alerts` to a key if you want to open the pending requests as a popup yourself.
+
+![The alerts action: two pending agent requests in a herdr popup](docs/screenshots/alerts.png)
+
+*`alerts`: pending agent requests in a popup; it closes by itself once all of them are decided.*
 
 The tussh pane is found by its label (`tussh`). If `jq` is missing or `herdr pane list` fails, the actions simply open a new tussh pane.
 
@@ -55,6 +63,17 @@ Then run `herdr server reload-config`.
 bash tests/run-tests.sh        # toggle decisions, launcher and alerts action against a fake herdr; no herdr needed (runs in CI)
 shellcheck scripts/*.sh tests/*.sh
 ```
+
+## Screenshots
+
+The images in `docs/screenshots/` are rendered from the [VHS](https://github.com/charmbracelet/vhs) tapes in `docs/tapes/` with demo data only:
+
+```sh
+brew install vhs pngquant oxipng   # vhs pulls ttyd and ffmpeg
+bash docs/screenshots.sh           # or: bash docs/screenshots.sh alerts
+```
+
+The script needs a [tussh](https://github.com/baeroe/tussh) checkout next to this repo (or `TUSSH_REPO=…`) and reuses its demo data: `docs/demo/seed.go` (connections on `*.example` hosts, an audit log), a real `tussh mcp` that leaves two approval requests pending, and `docs/demo/tui.go` (the normal TUI with a simulated reachability check, passed in via `TUSSH_BIN`). It starts a separate herdr server with its own `HOME` in a throwaway sandbox, with only this plugin linked, so your own herdr session is never touched. The demo config binds the actions to `ctrl+b h` and `ctrl+b a`. Everything is removed afterwards.
 
 ## Credits
 
