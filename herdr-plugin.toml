@@ -2,7 +2,7 @@ id = "herdr-tussh"
 name = "tussh"
 version = "0.1.0"
 min_herdr_version = "0.9.3"
-description = "Run tussh (SSH connection manager with AI agent access control) in a herdr split pane or its own tab, and pop up its approval alerts."
+description = "Run tussh (SSH connection manager with AI agent access control) in a herdr split pane or its own tab, or open its pending approvals as a popup."
 platforms = ["macos", "linux"]
 
 [[panes]]
