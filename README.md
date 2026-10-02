@@ -1,6 +1,6 @@
 # herdr-tussh
 
-Run [tussh](https://github.com/baeroe/tussh) in a [herdr](https://herdr.dev) split pane or in its own tab. tussh is an SSH connection manager with access control for AI agents. When an agent is waiting for your approval and no tussh window is open, this plugin pops up the approval alerts. herdr-tussh works the same way as [herdr-lazydocker](https://github.com/sudoeren/herdr-lazydocker) and [herdr-lazysql](https://github.com/baeroe/herdr-lazysql).
+Run [tussh](https://github.com/baeroe/tussh) in a [herdr](https://herdr.dev) split pane or in its own tab. tussh is an SSH connection manager with access control for AI agents. herdr-tussh works the same way as [herdr-lazydocker](https://github.com/sudoeren/herdr-lazydocker) and [herdr-lazysql](https://github.com/baeroe/herdr-lazysql).
 
 | Action | Does |
 |---|---|
@@ -8,7 +8,7 @@ Run [tussh](https://github.com/baeroe/tussh) in a [herdr](https://herdr.dev) spl
 | `open-tussh-tab` | Toggles tussh in its own tab: opens it, switches to its tab, focuses it, or closes it when it is focused |
 | `alerts` | Opens `tussh alerts --popup` as a popup. The popup closes by itself once every request it showed has been decided. |
 
-You don't need to bind `alerts` to a key. tussh invokes it on its own (`herdr plugin action invoke herdr-tussh.alerts`) when an agent request needs approval and no tussh TUI is running. If herdr is not running, tussh only shows a macOS notification.
+tussh itself knows nothing about herdr: when an agent needs approval and no tussh TUI is open, it only sends a macOS notification. Bind `alerts` to a key if you want to open the pending requests as a popup yourself.
 
 The tussh pane is found by its label (`tussh`). If `jq` is missing or `herdr pane list` fails, the actions simply open a new tussh pane.
 
