@@ -1,0 +1,38 @@
+id = "herdr-tussh"
+name = "tussh"
+version = "0.1.0"
+min_herdr_version = "0.9.3"
+description = "Run tussh (SSH connection manager with AI agent access control) in a herdr split pane or its own tab, and pop up its approval alerts."
+platforms = ["macos", "linux"]
+
+[[panes]]
+id = "tussh"
+title = "tussh"
+placement = "split"
+command = ["sh", "scripts/run-tussh.sh"]
+
+[[panes]]
+id = "alerts"
+title = "tussh alerts"
+placement = "popup"
+width = "80%"
+height = "70%"
+command = ["sh", "scripts/run-tussh.sh", "alerts", "--popup"]
+
+[[actions]]
+id = "open-tussh"
+title = "Open tussh"
+description = "Toggle tussh in a split pane."
+command = ["bash", "scripts/toggle-tussh.sh", "split"]
+
+[[actions]]
+id = "open-tussh-tab"
+title = "Open tussh (tab)"
+description = "Toggle tussh in its own tab."
+command = ["bash", "scripts/toggle-tussh.sh", "tab"]
+
+[[actions]]
+id = "alerts"
+title = "tussh alerts"
+description = "Show pending agent approval requests in a popup (invoked by tussh when no tussh window is open)."
+command = ["sh", "-c", "exec \"${HERDR_BIN_PATH:-herdr}\" plugin pane open --plugin herdr-tussh --entrypoint alerts --focus"]
