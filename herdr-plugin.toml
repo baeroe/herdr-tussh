@@ -2,13 +2,21 @@ id = "herdr-tussh"
 name = "tussh"
 version = "0.1.0"
 min_herdr_version = "0.9.3"
-description = "Run tussh (SSH connection manager with AI agent access control) in a herdr split pane or its own tab, or open its pending approvals as a popup."
+description = "Run tussh (SSH connection manager with AI agent access control) in a herdr split pane, its own tab or a popup, or open its pending approvals as a popup."
 platforms = ["macos", "linux"]
 
 [[panes]]
 id = "tussh"
 title = "tussh"
 placement = "split"
+command = ["sh", "scripts/run-tussh.sh"]
+
+[[panes]]
+id = "popup"
+title = "tussh (popup)"
+placement = "popup"
+width = "80%"
+height = "80%"
 command = ["sh", "scripts/run-tussh.sh"]
 
 [[panes]]
@@ -30,6 +38,12 @@ id = "open-tussh-tab"
 title = "Open tussh (tab)"
 description = "Toggle tussh in its own tab."
 command = ["bash", "scripts/toggle-tussh.sh", "tab"]
+
+[[actions]]
+id = "open-tussh-popup"
+title = "Open tussh (popup)"
+description = "Open tussh in a popup; it closes when you quit tussh (q)."
+command = ["sh", "-c", "exec \"${HERDR_BIN_PATH:-herdr}\" plugin pane open --plugin herdr-tussh --entrypoint popup --focus"]
 
 [[actions]]
 id = "alerts"

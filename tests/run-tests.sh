@@ -140,6 +140,25 @@ else
   pass "run: missing tussh exits non-zero"
 fi
 
+# --- popup action --------------------------------------------------------------
+
+# The manifest's popup action command, executed against the fake herdr.
+: > "$LOG"
+popup_cmd="$(sed -n '/^id = "open-tussh-popup"/,/^command/p' "$ROOT/herdr-plugin.toml" | sed -n 's/^command = \["sh", "-c", "\(.*\)"\]$/\1/p' | sed 's/\\"/"/g')"
+FAKE_LIST="$LIST" FAKE_LOG="$LOG" HERDR_BIN_PATH="$FAKE" sh -c "$popup_cmd" >/dev/null 2>&1
+if [ "$(/bin/cat "$LOG")" = "plugin pane open --plugin herdr-tussh --entrypoint popup --focus" ]; then
+  pass "popup action opens the popup entrypoint"
+else
+  fail "popup action opens the popup entrypoint"
+  printf '     got: %s\n' "$(/bin/cat "$LOG")"
+fi
+if sed -n '/^id = "popup"/,/^command/p' "$ROOT/herdr-plugin.toml" | grep -q 'placement = "popup"' &&
+  sed -n '/^id = "popup"/,/^command/p' "$ROOT/herdr-plugin.toml" | grep -q '^command = \["sh", "scripts/run-tussh.sh"\]$'; then
+  pass "popup entrypoint is a popup running plain tussh"
+else
+  fail "popup entrypoint is a popup running plain tussh"
+fi
+
 # --- alerts action -------------------------------------------------------------
 
 # The manifest's alerts action command, executed against the fake herdr.
