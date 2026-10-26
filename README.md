@@ -10,6 +10,7 @@ Run [tussh](https://github.com/baeroe/tussh) in a [herdr](https://herdr.dev) spl
 |---|---|
 | `open-tussh` | Toggles tussh in a split to the right: opens it, focuses it, or closes it when it is focused |
 | `open-tussh-tab` | Toggles tussh in its own tab: opens it, switches to its tab, focuses it, or closes it when it is focused |
+| `open-tussh-popup` | Opens tussh in a popup; it closes when you quit tussh (`q`) |
 | `alerts` | Opens `tussh alerts --popup` as a popup. The popup closes by itself once every request it showed has been decided. |
 
 tussh itself knows nothing about herdr: when an agent needs approval and no tussh TUI is open, it only sends a macOS notification. Bind `alerts` to a key if you want to open the pending requests as a popup yourself.
@@ -47,12 +48,12 @@ type = "plugin_action"
 command = "herdr-tussh.open-tussh"
 description = "tussh"
 
-# optional: tussh in its own tab
+# optional: tussh as a popup (q closes it)
 [[keys.command]]
 key = "alt+shift+h"
 type = "plugin_action"
-command = "herdr-tussh.open-tussh-tab"
-description = "tussh tab"
+command = "herdr-tussh.open-tussh-popup"
+description = "tussh popup"
 ```
 
 Then run `herdr server reload-config`.
